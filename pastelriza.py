@@ -6,12 +6,6 @@ def main(page: ft.Page):
         tabs=[
             ft.Tab(
                 text='A100',
-                content=ft.Container(
-                    width=500,
-                    height=500,
-                    content=ft.ElevatedButton(text='oo'),
-                    bgcolor=ft.colors.AMBER
-                )   
             ),
             ft.Tab(
                 text='A300'

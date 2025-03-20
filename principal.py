@@ -1,33 +1,71 @@
-import flet as ft
+import flet as ft 
+import bottomSheet
 
 
 def main(page: ft.Page):
-    def can(e):
-        adl.open = False
+    def bott(e):
+        page.overlay.append(bs)
+        bs.open = True
+        page.update()
+    def bann(e):
+        page.overlay.append(bn1)
+        bn1.open = True
+        page.update()
+    def ban(e):
+        bn1.open = False
         page.update()
 
-    def ok(e):
-        adl.open = False
-        page.add(ft.Text(value='CONFIMAÇAO OK', color=ft.colors.GREEN))
-        
-
-    adl= ft.AlertDialog(
-        title=ft.Text(value='Teste'),
-        content=ft.Text(value='conteudo'),
-        #content_padding=ft.padding.all(20)
-        modal=True,
-        actions=[
-            ft.ElevatedButton(text='ook', on_click=ok),
-            ft.TextButton(text='cancelar', on_click=can)
-        ]
-    )
-    
-    def bo(e):
-        page.overlay.append(adl)
+    def alerta(e):
         adl.open = True
         page.update()
-
-    page.add( ft.ElevatedButton(text='botao', on_click=bo))
+    bs = ft.BottomSheet(
+        content=ft.Container(
+            ft.Column(
+                controls=[
+                    ft.Text(value='Titulo', style=ft.TextThemeStyle.HEADLINE_LARGE),
+                    ft.Text(value='conteúdo do bottomsheet', style=ft.TextThemeStyle.HEADLINE_MEDIUM),
+                    ft.FilledButton(text='fechar'),
+                ]
+            ),
+            padding=20,
+        )
+        
+    )
+    adl = ft.AlertDialog(
+        title=ft.Text(value='Titulo'),
+        content=ft.Text(value='conteudo')
+    )
+    bn1 = ft.Banner(
+        content=ft.Text(value='Banner 1'),
+        actions=[
+            ft.ElevatedButton(text='banner 01', on_click=ban)
+        ]
+    )
+    tabs = ft.Tabs(
+        tabs=[
+            ft.Tab(
+                text='Alarme De Aviso',
+                content=ft.Container(
+                    content=ft.Column(controls=[ft.ElevatedButton(text='Açâo', on_click=alerta)])
+                )
+            ),
+            ft.Tab(
+                text='Banner',
+                content=ft.Container(
+                    content=ft.Column(controls=[ft.ElevatedButton(text='Açâo',on_click=bann)])
+                )
+            ),
+            ft.Tab(
+                text='BottomSheet',
+                content=ft.Container(
+                    content=ft.Column(controls=[ft.ElevatedButton(text='Açâo',on_click=bott)])
+                )
+            )
+        ]
+    )
+    page.overlay.append(adl)
+   
+    page.add(tabs)
 
 if __name__ == '__main__':
     ft.app(main)
